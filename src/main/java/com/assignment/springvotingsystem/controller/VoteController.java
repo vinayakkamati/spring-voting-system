@@ -51,4 +51,13 @@ public class VoteController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getLocalizedMessage());
         }
     }
+
+    @GetMapping(path = "/getWinner")
+    public ResponseEntity<?> getWinner(){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(voteService.getWinner());
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getLocalizedMessage());
+        }
+    }
 }

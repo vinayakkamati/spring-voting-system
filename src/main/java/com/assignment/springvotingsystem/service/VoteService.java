@@ -7,9 +7,11 @@ import java.util.Map;
 public interface VoteService {
     CandidateDetails addCandidate(String name);
 
-    CandidateDetails castVote(String name);
+    Long castVote(String name);
 
-    CandidateDetails countVote(String name);
+    Long countVote(String name);
 
     Map<String, Long> listVote();
+
+    String getWinner();
 }

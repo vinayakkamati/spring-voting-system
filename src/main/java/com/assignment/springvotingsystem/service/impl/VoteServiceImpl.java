@@ -5,42 +5,39 @@ import com.assignment.springvotingsystem.service.VoteService;
 import com.assignment.springvotingsystem.service.exceptions.InvalidRequestParamException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class VoteServiceImpl implements VoteService {
 
-    HashMap<String, Long> candidateDetails = new HashMap<>();
+    HashMap<String, Long> candidatesDetails = new HashMap<>();
     @Override
     public CandidateDetails addCandidate(String name) {
-        if (!candidateDetails.containsKey(name)){
-            candidateDetails.put(name, 0L);
+        if (!candidatesDetails.containsKey(name)){
+            candidatesDetails.put(name, 0L);
         }
         return CandidateDetails.builder()
                 .name(name)
-                .vote(candidateDetails.get(name)).build();
+                .vote(candidatesDetails.get(name)).build();
     }
 
     @Override
-    public CandidateDetails castVote(String name) {
-        if (candidateDetails.containsKey(name)){
-            long candidateValue = candidateDetails.get(name);
-            candidateDetails.replace(name,candidateValue,candidateValue + 1);
-            return CandidateDetails.builder()
-                    .name(name)
-                    .vote(candidateDetails.get(name)).build();
+    public Long castVote(String name) {
+        if (candidatesDetails.containsKey(name)){
+            long candidateValue = candidatesDetails.get(name);
+            candidatesDetails.replace(name,candidateValue,candidateValue + 1);
+            return candidatesDetails.get(name);
         }else{
             throw new InvalidRequestParamException("Unable to find candidate :" + name);
         }
     }
 
     @Override
-    public CandidateDetails countVote(String name) {
-        if (candidateDetails.containsKey(name)){
-            return CandidateDetails.builder()
-                    .name(name)
-                    .vote(candidateDetails.get(name)).build();
+    public Long countVote(String name) {
+        if (candidatesDetails.containsKey(name)){
+            return candidatesDetails.get(name);
         }else{
             throw new InvalidRequestParamException("Unable to find candidate :" + name);
         }
@@ -48,6 +45,13 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     public Map<String, Long> listVote() {
-        return candidateDetails;
+        return candidatesDetails;
+    }
+
+    @Override
+    public String getWinner() {
+        return Collections
+                .max(candidatesDetails.entrySet(), Map.Entry.comparingByValue())
+                .getKey();
     }
 }
