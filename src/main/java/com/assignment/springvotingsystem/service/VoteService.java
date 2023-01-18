@@ -5,9 +5,11 @@ import com.assignment.springvotingsystem.models.CandidateDetails;
 import java.util.Map;
 
 public interface VoteService {
-    Map<String, Long> addCandidate(String name);
+    CandidateDetails addCandidate(String name);
 
     CandidateDetails castVote(String name);
 
     CandidateDetails countVote(String name);
+
+    Map<String, Long> listVote();
 }

@@ -42,4 +42,13 @@ public class VoteController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getLocalizedMessage());
         }
     }
+
+    @GetMapping(path = "/listVote")
+    public ResponseEntity<?> listVote(){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(voteService.listVote());
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getLocalizedMessage());
+        }
+    }
 }

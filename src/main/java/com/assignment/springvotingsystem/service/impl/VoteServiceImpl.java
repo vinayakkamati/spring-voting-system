@@ -13,11 +13,13 @@ public class VoteServiceImpl implements VoteService {
 
     HashMap<String, Long> candidateDetails = new HashMap<>();
     @Override
-    public Map<String, Long> addCandidate(String name) {
+    public CandidateDetails addCandidate(String name) {
         if (!candidateDetails.containsKey(name)){
             candidateDetails.put(name, 0L);
         }
-        return candidateDetails;
+        return CandidateDetails.builder()
+                .name(name)
+                .vote(candidateDetails.get(name)).build();
     }
 
     @Override
@@ -42,5 +44,10 @@ public class VoteServiceImpl implements VoteService {
         }else{
             throw new InvalidRequestParamException("Unable to find candidate :" + name);
         }
+    }
+
+    @Override
+    public Map<String, Long> listVote() {
+        return candidateDetails;
     }
 }
