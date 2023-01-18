@@ -1,7 +1,11 @@
 package com.assignment.springvotingsystem.service;
 
+import com.assignment.springvotingsystem.models.CandidateDetails;
+
 import java.util.Map;
 
 public interface VoteService {
-    Map<String, Integer> addCandidate(String name);
+    Map<String, Long> addCandidate(String name);
+
+    CandidateDetails castVote(String name);
 }
