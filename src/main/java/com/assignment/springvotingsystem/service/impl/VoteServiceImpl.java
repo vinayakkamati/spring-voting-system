@@ -32,4 +32,15 @@ public class VoteServiceImpl implements VoteService {
             throw new InvalidRequestParamException("Unable to find candidate :" + name);
         }
     }
+
+    @Override
+    public CandidateDetails countVote(String name) {
+        if (candidateDetails.containsKey(name)){
+            return CandidateDetails.builder()
+                    .name(name)
+                    .vote(candidateDetails.get(name)).build();
+        }else{
+            throw new InvalidRequestParamException("Unable to find candidate :" + name);
+        }
+    }
 }

@@ -8,4 +8,6 @@ public interface VoteService {
     Map<String, Long> addCandidate(String name);
 
     CandidateDetails castVote(String name);
+
+    CandidateDetails countVote(String name);
 }

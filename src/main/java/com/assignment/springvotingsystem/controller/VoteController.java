@@ -4,10 +4,7 @@ import com.assignment.springvotingsystem.service.VoteService;
 import com.assignment.springvotingsystem.service.exceptions.InvalidRequestParamException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/vote")
@@ -32,6 +29,15 @@ public class VoteController {
     public ResponseEntity<?> castVote(@RequestParam final String name){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(voteService.castVote(name));
+        }catch (InvalidRequestParamException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getLocalizedMessage());
+        }
+    }
+
+    @GetMapping(path = "/countVote")
+    public ResponseEntity<?> countVote(@RequestParam final String name){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(voteService.countVote(name));
         }catch (InvalidRequestParamException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getLocalizedMessage());
         }
