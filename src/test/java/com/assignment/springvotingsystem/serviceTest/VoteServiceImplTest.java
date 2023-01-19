@@ -37,6 +37,7 @@ class VoteServiceImplTest {
     @DisplayName("Positive case: add candidate")
     void addCandidate() {
         CandidateDetails expectedValue = getCandidateDetails();
+        Mockito.when(candidatesDetails.get(NAME)).thenReturn(0L);
         CandidateDetails actualValue = voteService.addCandidate(NAME);
         assertNotNull(actualValue);
         assertEquals(expectedValue,actualValue);
